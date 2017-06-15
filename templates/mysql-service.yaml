@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ratesdb
+  namespace: handknitted
+  labels:
+    app: ratesdb
+spec:
+  type: NodePort
+  ports:
+  - name: ratesdb
+    port: 3306
+    protocol: TCP
+    targetPort: ratesdb
+  selector:
+    app: ratesdb
+

@@ -1,0 +1,9 @@
+apiVersion: v1
+description: Database for cost-analytics-api rates
+name: ratesdb
+version: 0.1.1
+sources:
+  - https://github.com/handknitted/ratesdb
+maintainers: 
+  - name: David C Kennedy 
+    email: david.c.kennedy@hpe.com

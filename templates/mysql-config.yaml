@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: handknitted
+  name: ratesdb-mysql-config
+data:
+  ratesdb.sql: |
+    CREATE DATABASE IF NOT EXISTS `ratesdb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+    USE `ratesdb`;
+
+    SET foreign_key_checks = 0;
+
+    CREATE TABLE IF NOT EXISTS `rates` (
+      `meterId` varchar(128) NOT NULL,
+      `name` varchar(128) NOT NULL,
+      `effectiveDate` varchar(20) NOT NULL,
+      `rate` DECIMAL(21, 20) NULL,
+      `unit` VARCHAR(128) NOT NULL,
+      PRIMARY KEY (`meterId`, `effectiveDate`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+    GRANT ALL ON ratesdb.* TO 'cost-analytics'@'%' IDENTIFIED BY 'password';
+
+    GRANT ALL ON ratesdb.* TO 'cost-analytics'@'localhost' IDENTIFIED BY 'password';
+  zinsert_rates.sql: |
+    DELETE FROM `ratesdb`.`rates`;
+
+    INSERT IGNORE INTO `ratesdb`.`rates`
+    (`meterId`,
+    `name`,
+    `effectiveDate`,
+    `rate`,
+    `unit`)
+    VALUES
+    ('Allocated_Cores','Compute Hours','03/28/2017',0.02000265003261580000,'Hours'),
+    ('Allocated_Memory_In_GB','Memory GB','03/28/2017',0.00054694746182933800,'GB'),
+    ('Allocated_Disk_In_GB','Disk GB','03/28/2017',0.00000244172974030954,'GB'),
+    ('Allocated_Storage_In_GB','Storage GB','03/28/2017',0.00002670641903463560,'GB'),
+    ('Network_In_GB','Network GB In','03/28/2017',0.00000607719402032598,'GB'),
+    ('Network_Out_GB','Network GB Out','06/25/2011',0.00000607719402032598,'TB');
