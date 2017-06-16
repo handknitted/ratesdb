@@ -11,9 +11,9 @@ data:
     SET foreign_key_checks = 0;
 
     CREATE TABLE IF NOT EXISTS `rates` (
-      `meterId` varchar(128) NOT NULL,
-      `name` varchar(128) NOT NULL,
-      `effectiveDate` varchar(20) NOT NULL,
+      `meterId` VARCHAR(128) NOT NULL,
+      `name` VARCHAR(128) NOT NULL,
+      `effectiveDate` DATE NOT NULL,
       `rate` DECIMAL(21, 20) NULL,
       `unit` VARCHAR(128) NOT NULL,
       PRIMARY KEY (`meterId`, `effectiveDate`)
@@ -32,9 +32,9 @@ data:
     `rate`,
     `unit`)
     VALUES
-    ('Allocated_Cores','Compute Hours','03/28/2017',0.02000265003261580000,'Hours'),
-    ('Allocated_Memory_In_GB','Memory GB','03/28/2017',0.00054694746182933800,'GB'),
-    ('Allocated_Disk_In_GB','Disk GB','03/28/2017',0.00000244172974030954,'GB'),
-    ('Allocated_Storage_In_GB','Storage GB','03/28/2017',0.00002670641903463560,'GB'),
-    ('Network_In_GB','Network GB In','03/28/2017',0.00000607719402032598,'GB'),
-    ('Network_Out_GB','Network GB Out','06/25/2011',0.00000607719402032598,'TB');
+    ('Allocated_Cores','Compute Hours','2017/03/28',0.02000265003261580000,'Hours'),
+    ('Allocated_Memory_In_GB','Memory GB','2017/03/28',0.00054694746182933800,'GB'),
+    ('Allocated_Disk_In_GB','Disk GB','2017/03/28',0.00000244172974030954,'GB'),
+    ('Allocated_Storage_In_GB','Storage GB','2017/03/28',0.00002670641903463560,'GB'),
+    ('Network_In_GB','Network GB In','2017/03/28',0.00000607719402032598,'GB'),
+    ('Network_Out_GB','Network GB Out','2011/06/25',0.00000607719402032598,'TB');

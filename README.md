@@ -47,7 +47,7 @@ A mysql instance intended to provide persistence for rates within the cost-analy
 
 4 Start ratesdb
 
-    helm install ratesdb --namespace handknitted --name ratesdb
+    helm install ratesdb-0.1.1.tgz --namespace handknitted --name ratesdb
 
   To take down our services with helm is simple.  When the chart is released a
   daft name is assigned it.  If you forget it no problem:
