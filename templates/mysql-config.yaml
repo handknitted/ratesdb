@@ -11,12 +11,12 @@ data:
     SET foreign_key_checks = 0;
 
     CREATE TABLE IF NOT EXISTS `rates` (
-      `meterId` VARCHAR(128) NOT NULL,
+      `meterID` VARCHAR(128) NOT NULL,
       `name` VARCHAR(128) NOT NULL,
       `effectiveDate` DATE NOT NULL,
       `rate` DECIMAL(21, 20) NULL,
       `unit` VARCHAR(128) NOT NULL,
-      PRIMARY KEY (`meterId`, `effectiveDate`)
+      PRIMARY KEY (`meterID`, `effectiveDate`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
     GRANT ALL ON ratesdb.* TO 'cost-analytics'@'%' IDENTIFIED BY 'password';
@@ -26,7 +26,7 @@ data:
     DELETE FROM `ratesdb`.`rates`;
 
     INSERT IGNORE INTO `ratesdb`.`rates`
-    (`meterId`,
+    (`meterID`,
     `name`,
     `effectiveDate`,
     `rate`,
