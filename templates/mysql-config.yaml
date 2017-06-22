@@ -11,12 +11,14 @@ data:
     SET foreign_key_checks = 0;
 
     CREATE TABLE IF NOT EXISTS `rates` (
+      `region` VARCHAR(128) NOT NULL,
+      `provider` VARCHAR(128) NOT NULL,
       `meterID` VARCHAR(128) NOT NULL,
       `name` VARCHAR(128) NOT NULL,
       `effectiveDate` DATE NOT NULL,
       `rate` DECIMAL(21, 20) NULL,
       `unit` VARCHAR(128) NOT NULL,
-      PRIMARY KEY (`meterID`, `effectiveDate`)
+      PRIMARY KEY (`meterID`, `effectiveDate`, `region`, `provider`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
     GRANT ALL ON ratesdb.* TO 'cost-analytics'@'%' IDENTIFIED BY 'password';
@@ -26,15 +28,29 @@ data:
     DELETE FROM `ratesdb`.`rates`;
 
     INSERT IGNORE INTO `ratesdb`.`rates`
-    (`meterID`,
+    (`provider`,
+    `region`,
+    `meterID`,
     `name`,
     `effectiveDate`,
     `rate`,
     `unit`)
     VALUES
-    ('Allocated_Cores','Compute Hours','2017/03/28',0.02000265003261580000,'Hours'),
-    ('Allocated_Memory_In_GB','Memory GB','2017/03/28',0.00054694746182933800,'GB'),
-    ('Allocated_Disk_In_GB','Disk GB','2017/03/28',0.00000244172974030954,'GB'),
-    ('Allocated_Storage_In_GB','Storage GB','2017/03/28',0.00002670641903463560,'GB'),
-    ('Network_In_GB','Network GB In','2017/03/28',0.00000607719402032598,'GB'),
-    ('Network_Out_GB','Network GB Out','2011/06/25',0.00000607719402032598,'TB');
+    ('ncs', 'default', 'Allocated_Cores','Compute Hours','2017/03/28',0.02000265003261580000,'Hours'),
+    ('ncs', 'default', 'Allocated_Memory_In_GB','Memory GB','2017/03/28',0.00054694746182933800,'GB'),
+    ('ncs', 'default', 'Allocated_Disk_In_GB','Disk GB','2017/03/28',0.00000244172974030954,'GB'),
+    ('ncs', 'default', 'Allocated_Storage_In_GB','Storage GB','2017/03/28',0.00002670641903463560,'GB'),
+    ('ncs', 'default', 'Network_In_GB','Network GB In','2017/03/28',0.00000607719402032598,'GB'),
+    ('ncs', 'default', 'Network_Out_GB','Network GB Out','2011/06/25',0.00000607719402032598,'TB'),
+    ('ncs', 'region1', 'Allocated_Cores','Compute Hours','2017/03/28',0.02000265003261580000,'Hours'),
+    ('ncs', 'region1', 'Allocated_Memory_In_GB','Memory GB','2017/03/28',0.00054694746182933800,'GB'),
+    ('ncs', 'region1', 'Allocated_Disk_In_GB','Disk GB','2017/03/28',0.00000244172974030954,'GB'),
+    ('ncs', 'region1', 'Allocated_Storage_In_GB','Storage GB','2017/03/28',0.00002670641903463560,'GB'),
+    ('ncs', 'region1', 'Network_In_GB','Network GB In','2017/03/28',0.00000607719402032598,'GB'),
+    ('ncs', 'region1', 'Network_Out_GB','Network GB Out','2011/06/25',0.00000607719402032598,'TB'),
+    ('ncs-alt', 'default', 'Allocated_Cores','Compute Hours','2017/03/28',0.02000265003261580000,'Hours'),
+    ('ncs-alt', 'default', 'Allocated_Memory_In_GB','Memory GB','2017/03/28',0.00054694746182933800,'GB'),
+    ('ncs-alt', 'default', 'Allocated_Disk_In_GB','Disk GB','2017/03/28',0.00000244172974030954,'GB'),
+    ('ncs-alt', 'default', 'Allocated_Storage_In_GB','Storage GB','2017/03/28',0.00002670641903463560,'GB'),
+    ('ncs-alt', 'default', 'Network_In_GB','Network GB In','2017/03/28',0.00000607719402032598,'GB'),
+    ('ncs-alt', 'default', 'Network_Out_GB','Network GB Out','2011/06/25',0.00000607719402032598,'TB');
