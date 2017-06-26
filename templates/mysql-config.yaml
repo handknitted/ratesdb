@@ -11,16 +11,29 @@ data:
     SET foreign_key_checks = 0;
 
     CREATE TABLE IF NOT EXISTS `rates` (
-      `rateID` VARCHAR(32) NOT NULL,
-      `region` VARCHAR(128) NOT NULL,
-      `provider` VARCHAR(128) NOT NULL,
-      `meterID` VARCHAR(128) NOT NULL,
-      `name` VARCHAR(128) NOT NULL,
-      `effectiveDate` DATE NOT NULL,
-      `rate` DECIMAL(21, 20) NULL,
-      `unit` VARCHAR(128) NOT NULL,
-      PRIMARY KEY (`rateID`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+          `rateID` VARCHAR(32) NOT NULL,
+          `region` VARCHAR(128) NOT NULL,
+          `provider` VARCHAR(128) NOT NULL,
+          `meterID` VARCHAR(128) NOT NULL,
+          `name` VARCHAR(128) NOT NULL,
+          `effectiveDate` DATE NOT NULL,
+          `rate` DECIMAL(21, 20) NULL,
+          `unit` VARCHAR(128) NOT NULL,
+          `status` VARCHAR(16) NULL,
+          PRIMARY KEY (`rateID`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+    CREATE TABLE IF NOT EXISTS `rate_cards` (
+          `rateCardID` VARCHAR(32) NOT NULL,
+          `uploadDateTime` DATETIME NOT NULL,
+          PRIMARY KEY (`rateCardID`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+    CREATE TABLE IF NOT EXISTS `rate_card_rates` (
+          `rateCardID` VARCHAR(32) NOT NULL,
+          `rateID` VARCHAR(32) NOT NULL,
+          PRIMARY KEY (`rateCardID`, `rateID`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
     GRANT ALL ON ratesdb.* TO 'cost-analytics'@'%' IDENTIFIED BY 'password';
 
