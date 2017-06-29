@@ -11,8 +11,8 @@ data:
     SET foreign_key_checks = 0;
 
     CREATE TABLE IF NOT EXISTS `rates` (
-          `rateID` VARCHAR(32) NOT NULL,
-          `rateCardID` VARCHAR(32) NULL,
+          `rateID` VARCHAR(36) NOT NULL,
+          `rateCardID` VARCHAR(36) NULL,
           `region` VARCHAR(128) NOT NULL,
           `meterID` VARCHAR(128) NOT NULL,
           `name` VARCHAR(128) NOT NULL,
@@ -20,14 +20,17 @@ data:
           `rate` DECIMAL(21, 20) NULL,
           `unit` VARCHAR(128) NOT NULL,
           `status` VARCHAR(16) NULL,
+          `createdDateTime` DATETIME NOT NULL,
+          `deletedDateTime` DATETIME NULL,
           PRIMARY KEY (`rateID`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
     CREATE TABLE IF NOT EXISTS `rate_cards` (
-          `rateCardID` VARCHAR(32) NOT NULL,
-          `provider` VARCHAR(32) NOT NULL,
+          `rateCardID` VARCHAR(36) NOT NULL,
+          `provider` VARCHAR(36) NOT NULL,
           `createdDateTime` DATETIME NOT NULL,
-          PRIMARY KEY (`rateCardID`)
+          PRIMARY KEY (`rateCardID`),
+          UNIQUE KEY (`provider`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
     GRANT ALL ON ratesdb.* TO 'cost-analytics'@'%' IDENTIFIED BY 'password';
@@ -44,26 +47,28 @@ data:
     `name`,
     `effectiveDate`,
     `rate`,
-    `unit`)
+    `unit`,
+    `status`,
+    `createdDateTime`)
     VALUES
-    ('d8f77e24-7d91-456d-8a03-26514c09f030', 'f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'default', 'Allocated_Cores','Compute Hours','2017/03/28',0.02000265003261580000,'Hours'),
-    ('031f07eb-c5b7-44ec-b6bd-6b0e5e35bc68', 'f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'default', 'Allocated_Memory_In_GB','Memory GB','2017/03/28',0.00054694746182933800,'GB'),
-    ('bc7b3d9e-550e-4406-8aa5-85103fd75cbf','f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'default', 'Allocated_Disk_In_GB','Disk GB','2017/03/28',0.00000244172974030954,'GB'),
-    ('70e06d13-e121-456f-acc6-7ccaa9097029','f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'default', 'Allocated_Storage_In_GB','Storage GB','2017/03/28',0.00002670641903463560,'GB'),
-    ('446cf376-76ac-4784-96a4-640cc071a894','f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'default', 'Network_In_GB','Network GB In','2017/03/28',0.00000607719402032598,'GB'),
-    ('f3c705c4-4e45-4b99-8331-b439b11554cd','f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'default', 'Network_Out_GB','Network GB Out','2011/06/25',0.00000607719402032598,'TB'),
-    ('6eb78a71-0e4a-46d4-a842-00eefa80e118','f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'region1', 'Allocated_Cores','Compute Hours','2017/03/28',0.02000265003261580000,'Hours'),
-    ('410e790d-2f69-43ee-bdfb-27849ae12841','f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'region1', 'Allocated_Memory_In_GB','Memory GB','2017/03/28',0.00054694746182933800,'GB'),
-    ('d35723e7-ccec-4f33-9957-8fca7f91a7ac','f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'region1', 'Allocated_Disk_In_GB','Disk GB','2017/03/28',0.00000244172974030954,'GB'),
-    ('694964c0-e612-4b87-8774-a85304ba73dc','f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'region1', 'Allocated_Storage_In_GB','Storage GB','2017/03/28',0.00002670641903463560,'GB'),
-    ('df5d907b-6013-42df-bb63-5535ba704af9','f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'region1', 'Network_In_GB','Network GB In','2017/03/28',0.00000607719402032598,'GB'),
-    ('0d9607ec-2f52-4ac3-bf16-ad2b10fc1480','f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'region1', 'Network_Out_GB','Network GB Out','2011/06/25',0.00000607719402032598,'TB'),
-    ('673a21c2-1a96-4e71-b24b-ef78f82fff62','3e6b5054-5b1d-11e7-bf72-a316e18d23f2', 'default', 'Allocated_Cores','Compute Hours','2017/03/28',0.02000265003261580000,'Hours'),
-    ('7d7ecdc0-2f54-44a0-8c1a-df66d93024ff','3e6b5054-5b1d-11e7-bf72-a316e18d23f2', 'default', 'Allocated_Memory_In_GB','Memory GB','2017/03/28',0.00054694746182933800,'GB'),
-    ('311fa9c3-8add-4737-8960-8308e2c956f0','3e6b5054-5b1d-11e7-bf72-a316e18d23f2', 'default', 'Allocated_Disk_In_GB','Disk GB','2017/03/28',0.00000244172974030954,'GB'),
-    ('2f1f07da-e85a-40be-8876-bd637d6c34c5','3e6b5054-5b1d-11e7-bf72-a316e18d23f2', 'default', 'Allocated_Storage_In_GB','Storage GB','2017/03/28',0.00002670641903463560,'GB'),
-    ('5b2e5528-6b2b-44c2-860a-a4544724cc74','3e6b5054-5b1d-11e7-bf72-a316e18d23f2', 'default', 'Network_In_GB','Network GB In','2017/03/28',0.00000607719402032598,'GB'),
-    ('14abc37f-9362-4e08-96e1-87f99175dbd1','3e6b5054-5b1d-11e7-bf72-a316e18d23f2', 'default', 'Network_Out_GB','Network GB Out','2011/06/25',0.00000607719402032598,'TB');
+    ('d8f77e24-7d91-456d-8a03-26514c09f030', 'f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'default', 'Allocated_Cores','Compute Hours','2017/03/28',0.02000265003261580000,'Hours', 'Active', '2017-06-27 14:38:23.126'),
+    ('031f07eb-c5b7-44ec-b6bd-6b0e5e35bc68', 'f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'default', 'Allocated_Memory_In_GB','Memory GB','2017/03/28',0.00054694746182933800,'GB', 'Active', '2017-06-27 14:38:23.126'),
+    ('bc7b3d9e-550e-4406-8aa5-85103fd75cbf','f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'default', 'Allocated_Disk_In_GB','Disk GB','2017/03/28',0.00000244172974030954,'GB', 'Active', '2017-06-27 14:38:23.126'),
+    ('70e06d13-e121-456f-acc6-7ccaa9097029','f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'default', 'Allocated_Storage_In_GB','Storage GB','2017/03/28',0.00002670641903463560,'GB', 'Active', '2017-06-27 14:38:23.126'),
+    ('446cf376-76ac-4784-96a4-640cc071a894','f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'default', 'Network_In_GB','Network GB In','2017/03/28',0.00000607719402032598,'GB', 'Active', '2017-06-27 14:38:23.126'),
+    ('f3c705c4-4e45-4b99-8331-b439b11554cd','f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'default', 'Network_Out_GB','Network GB Out','2011/06/25',0.00000607719402032598,'TB', 'Active', '2017-06-27 14:38:23.126'),
+    ('6eb78a71-0e4a-46d4-a842-00eefa80e118','f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'region1', 'Allocated_Cores','Compute Hours','2017/03/28',0.02000265003261580000,'Hours', 'Active', '2017-06-27 14:38:23.126'),
+    ('410e790d-2f69-43ee-bdfb-27849ae12841','f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'region1', 'Allocated_Memory_In_GB','Memory GB','2017/03/28',0.00054694746182933800,'GB', 'Active', '2017-06-27 14:38:23.126'),
+    ('d35723e7-ccec-4f33-9957-8fca7f91a7ac','f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'region1', 'Allocated_Disk_In_GB','Disk GB','2017/03/28',0.00000244172974030954,'GB', 'Active', '2017-06-27 14:38:23.126'),
+    ('694964c0-e612-4b87-8774-a85304ba73dc','f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'region1', 'Allocated_Storage_In_GB','Storage GB','2017/03/28',0.00002670641903463560,'GB', 'Active', '2017-06-27 14:38:23.126'),
+    ('df5d907b-6013-42df-bb63-5535ba704af9','f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'region1', 'Network_In_GB','Network GB In','2017/03/28',0.00000607719402032598,'GB', 'Active', '2017-06-27 14:38:23.126'),
+    ('0d9607ec-2f52-4ac3-bf16-ad2b10fc1480','f6a54f7c-5b1c-11e7-ac60-8b5011c88c29', 'region1', 'Network_Out_GB','Network GB Out','2011/06/25',0.00000607719402032598,'TB', 'Active', '2017-06-27 14:38:23.126'),
+    ('673a21c2-1a96-4e71-b24b-ef78f82fff62','3e6b5054-5b1d-11e7-bf72-a316e18d23f2', 'default', 'Allocated_Cores','Compute Hours','2017/03/28',0.02000265003261580000,'Hours', 'Active', '2017-06-27 14:38:23.126'),
+    ('7d7ecdc0-2f54-44a0-8c1a-df66d93024ff','3e6b5054-5b1d-11e7-bf72-a316e18d23f2', 'default', 'Allocated_Memory_In_GB','Memory GB','2017/03/28',0.00054694746182933800,'GB', 'Active', '2017-06-27 14:38:23.126'),
+    ('311fa9c3-8add-4737-8960-8308e2c956f0','3e6b5054-5b1d-11e7-bf72-a316e18d23f2', 'default', 'Allocated_Disk_In_GB','Disk GB','2017/03/28',0.00000244172974030954,'GB', 'Active', '2017-06-27 14:38:23.126'),
+    ('2f1f07da-e85a-40be-8876-bd637d6c34c5','3e6b5054-5b1d-11e7-bf72-a316e18d23f2', 'default', 'Allocated_Storage_In_GB','Storage GB','2017/03/28',0.00002670641903463560,'GB', 'Active', '2017-06-27 14:38:23.126'),
+    ('5b2e5528-6b2b-44c2-860a-a4544724cc74','3e6b5054-5b1d-11e7-bf72-a316e18d23f2', 'default', 'Network_In_GB','Network GB In','2017/03/28',0.00000607719402032598,'GB', 'Active', '2017-06-27 14:38:23.126'),
+    ('14abc37f-9362-4e08-96e1-87f99175dbd1','3e6b5054-5b1d-11e7-bf72-a316e18d23f2', 'default', 'Network_Out_GB','Network GB Out','2011/06/25',0.00000607719402032598,'TB', 'Active', '2017-06-27 14:38:23.126');
 
     DELETE FROM `ratesdb`.`rate_cards`;
 
