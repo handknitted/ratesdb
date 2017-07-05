@@ -20,15 +20,15 @@ data:
           `rate` DECIMAL(21, 20) NULL,
           `unit` VARCHAR(128) NOT NULL,
           `status` VARCHAR(16) NULL,
-          `createdDateTime` DATETIME NOT NULL,
-          `deletedDateTime` DATETIME NULL,
+          `createdDateTime` DATETIME(3) NOT NULL,
+          `deletedDateTime` DATETIME(3) NULL,
           PRIMARY KEY (`rateID`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
     CREATE TABLE IF NOT EXISTS `rate_cards` (
           `rateCardID` VARCHAR(36) NOT NULL,
           `provider` VARCHAR(36) NOT NULL,
-          `createdDateTime` DATETIME NOT NULL,
+          `createdDateTime` DATETIME(3) NOT NULL,
           PRIMARY KEY (`rateCardID`),
           UNIQUE KEY (`provider`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
