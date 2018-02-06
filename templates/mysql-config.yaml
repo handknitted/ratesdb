@@ -10,29 +10,35 @@ data:
 
     SET foreign_key_checks = 0;
 
-    CREATE TABLE IF NOT EXISTS `rates` (
-          `rateID` VARCHAR(36) NOT NULL,
-          `rateCardID` VARCHAR(36) NULL,
-          `region` VARCHAR(128) NOT NULL,
-          `meterID` VARCHAR(128) NOT NULL,
-          `name` VARCHAR(128) NOT NULL,
-          `effectiveDate` DATE NOT NULL,
-          `rate` DECIMAL(21, 20) NULL,
-          `unit` VARCHAR(128) NOT NULL,
-          `status` VARCHAR(16) NULL,
-          `createdDateTime` DATETIME(3) NOT NULL,
-          `deletedDateTime` DATETIME(3) NULL,
-          PRIMARY KEY (`rateID`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-    CREATE TABLE IF NOT EXISTS `rate_cards` (
-          `rateCardID` VARCHAR(36) NOT NULL,
-          `provider` VARCHAR(36) NOT NULL,
-          `createdDateTime` DATETIME(3) NOT NULL,
-          PRIMARY KEY (`rateCardID`),
-          UNIQUE KEY (`provider`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
+    CREATE TABLE IF NOT EXISTS rates (
+        id VARCHAR(255) UNIQUE PRIMARY KEY NOT NULL,
+        resource_uri VARCHAR(255) NOT NULL,
+        resource_terminated DATETIME NULL,
+        meter_id VARCHAR(128) NOT NULL,
+        name VARCHAR(255) NOT NULL,
+        effective_date DATETIME NOT NULL,
+        rate_value DECIMAL(18, 9) NOT NULL,
+        unit VARCHAR(128) NOT NULL,
+        active BOOLEAN NOT NULL,
+        created DATETIME NOT NULL,
+        deleted DATETIME NULL,
+        use_default_rate BOOLEAN NULL
+    );
+    
+      
+    
     GRANT ALL ON ratesdb.* TO 'cost-analytics'@'%' IDENTIFIED BY 'password';
 
     GRANT ALL ON ratesdb.* TO 'cost-analytics'@'localhost' IDENTIFIED BY 'password';
+  
+  zinsert_rates.sql: |
+    DELETE FROM `ratesdb`.`rates`;
+
+    INSERT IGNORE INTO ratesdb.rates (id, resource_uri, meter_id, name, rate_value, unit, effective_date, use_default_rate)
+    VALUES
+        ('6b252550-d036-11e7-bc57-fb68ff63aa79', 'default', 'ncs.resource.annual.cost', 'NCS Resource Annual Cost (default)', 298.602283105, 'Year', '2017-02-01', TRUE, FALSE),
+        ('f8fcedb6-d038-11e7-8183-c7fffe77cec1', 'default', 'resource.cores.allocation', 'VM CPU Count (default)', 0.002, 'cores', '2017-02-01', TRUE, FALSE),
+        ('0326eaa8-d039-11e7-b0f1-63cd99fb1682', 'default', 'resource.memory.allocation', 'VM Memory GB (default)', 0.006, 'GB', '2017-02-01', TRUE, FALSE),
+        ('0a46cf7e-d039-11e7-822e-f7e5e7870764', 'default', 'resource.storage.allocation', 'VM Disk GB (default)', 0.000009722, 'GB', '2017-02-01', TRUE, FALSE)
+        ('bfb49602-0b53-11e8-9c5f-d72a397bc955', '/rest/regions/fa491f92-3fbf-4715-befc-bae1f65ec0b7', 'ncs.resource.annual.cost', 'NCS Resource Annual Cost', 110000.22222, 'Year', '2017-07-01', TRUE, FALSE),
+        ('cb480378-0b53-11e8-9549-5fe4892e0a62', '/rest/zones/f9ba9f8b-d4be-48f8-bab6-67c933b9b327', 'ncs.resource.annual.cost', 'NCS Resource Annual Cost', 0, 'Year', '2018-02-03', TRUE, TRUE),;
