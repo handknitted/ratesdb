@@ -5,6 +5,14 @@ A mysql instance intended to provide persistence for rates within the cost-analy
 
 1 Start a kubernetes 'cluster' - to make this easy we'll use minikube
 
+  Install the virtualization driver.  Virtualbox is possible but kvm2 is pretty straightforward:
+  See https://github.com/kubernetes/minikube/blob/master/docs/drivers.md
+  
+    sudo apt install libvirt-bin qemu-kvm
+    sudo usermod -a -G libvirt $(whoami)  # or libvirtd on some ubuntu releases
+    newgrp libvirt                        # or libvirtd on some ubuntu releases
+    curl -LO https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-kvm2 && chmod +x docker-machine-driver-kvm2 && sudo mv docker-machine-driver-kvm2 /usr/bin/
+
   See http://kubernetes.io/docs/getting-started-guides/minikube/
 
   *but basically it's a couple of simple gets from googlapis:*
@@ -12,17 +20,16 @@ A mysql instance intended to provide persistence for rates within the cost-analy
     curl -Lo kubectl http://storage.googleapis.com/kubernetes-release/release/v1.5.1/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
     curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.15.0/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
 
-  Start minikube with a little more resource than the puny default
+  Start minikube with a little more resource than the puny default (change the driver if kvm2 is not the chosen virtualization)
 
-    minikube start --cpus 2 --memory 4096 --disk-size 10g
+    minikube start --vm-driver kvm2 --cpus 2 --memory 4096 --disk-size 10g --docker-env http_proxy=$http_proxy --docker-env https_proxy=$https_proxy --docker-env HTTP_PROXY=$http_proxy --docker-env HTTPS_PROXY=$https_proxy
   
-  N.B. If behind a proxy append
-
-    --docker-env http_proxy=$http_proxy --docker-env https_proxy=$https_proxy
+  N.B. If not behind a proxy don't use the docker-env params    
   
-  and run 
+  then run 
   
     export no_proxy=$no_proxy,$(minikube ip)
+    export NO_PROXY=$no_proxy,$(minikube ip)
 
   Then
 
