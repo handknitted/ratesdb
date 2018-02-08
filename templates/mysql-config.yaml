@@ -40,4 +40,4 @@ data:
         ('0a46cf7e-d039-11e7-822e-f7e5e7870764', 'default', 'resource.storage.allocation', 'VM Disk GB (default)', 0.000009722, 'GB', '2017-02-01', TRUE, FALSE),
         ('bfb49602-0b53-11e8-9c5f-d72a397bc955', '/rest/regions/fa491f92-3fbf-4715-befc-bae1f65ec0b7', 'ncs.resource.annual.cost', 'NCS Resource Annual Cost', 110000.22222, 'Year', '2017-07-01', TRUE, FALSE),
         ('cb480378-0b53-11e8-9549-5fe4892e0a62', '/rest/zones/f9ba9f8b-d4be-48f8-bab6-67c933b9b327', 'ncs.resource.annual.cost', 'NCS Resource Annual Cost', 108989.833333325, 'Year', '2018-02-07', TRUE, FALSE),
-        ('cb480378-0b53-11e8-9549-5fe4892e0a62', '/rest/zones/f9ba9f8b-d4be-48f8-bab6-67c933b9b327', 'ncs.resource.annual.cost', 'NCS Resource Annual Cost', 0, 'Year', '2018-02-03', TRUE, TRUE);
+        ('caccd1ee-0cde-11e8-baeb-6ff2379dd7da', '/rest/zones/f9ba9f8b-d4be-48f8-bab6-67c933b9b327', 'ncs.resource.annual.cost', 'NCS Resource Annual Cost', 0, 'Year', '2018-02-03', TRUE, TRUE);
