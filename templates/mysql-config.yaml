@@ -8,8 +8,6 @@ data:
     CREATE DATABASE IF NOT EXISTS `ratesdb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
     USE `ratesdb`;
 
-    SET foreign_key_checks = 0;
-
     CREATE TABLE IF NOT EXISTS rates (
         id VARCHAR(255) UNIQUE PRIMARY KEY NOT NULL,
         resource_uri VARCHAR(255) NOT NULL,
@@ -34,11 +32,12 @@ data:
   zinsert_rates.sql: |
     DELETE FROM `ratesdb`.`rates`;
 
-    INSERT IGNORE INTO ratesdb.rates (id, resource_uri, meter_id, name, rate_value, unit, effective_date, use_default_rate)
+    INSERT IGNORE INTO ratesdb.rates (id, resource_uri, meter_id, name, rate_value, unit, effective_date, active, use_default_rate)
     VALUES
         ('6b252550-d036-11e7-bc57-fb68ff63aa79', 'default', 'ncs.resource.annual.cost', 'NCS Resource Annual Cost (default)', 298.602283105, 'Year', '2017-02-01', TRUE, FALSE),
         ('f8fcedb6-d038-11e7-8183-c7fffe77cec1', 'default', 'resource.cores.allocation', 'VM CPU Count (default)', 0.002, 'cores', '2017-02-01', TRUE, FALSE),
         ('0326eaa8-d039-11e7-b0f1-63cd99fb1682', 'default', 'resource.memory.allocation', 'VM Memory GB (default)', 0.006, 'GB', '2017-02-01', TRUE, FALSE),
-        ('0a46cf7e-d039-11e7-822e-f7e5e7870764', 'default', 'resource.storage.allocation', 'VM Disk GB (default)', 0.000009722, 'GB', '2017-02-01', TRUE, FALSE)
+        ('0a46cf7e-d039-11e7-822e-f7e5e7870764', 'default', 'resource.storage.allocation', 'VM Disk GB (default)', 0.000009722, 'GB', '2017-02-01', TRUE, FALSE),
         ('bfb49602-0b53-11e8-9c5f-d72a397bc955', '/rest/regions/fa491f92-3fbf-4715-befc-bae1f65ec0b7', 'ncs.resource.annual.cost', 'NCS Resource Annual Cost', 110000.22222, 'Year', '2017-07-01', TRUE, FALSE),
-        ('cb480378-0b53-11e8-9549-5fe4892e0a62', '/rest/zones/f9ba9f8b-d4be-48f8-bab6-67c933b9b327', 'ncs.resource.annual.cost', 'NCS Resource Annual Cost', 0, 'Year', '2018-02-03', TRUE, TRUE),;
+        ('cb480378-0b53-11e8-9549-5fe4892e0a62', '/rest/zones/f9ba9f8b-d4be-48f8-bab6-67c933b9b327', 'ncs.resource.annual.cost', 'NCS Resource Annual Cost', 108989.833333325, 'Year', '2018-02-07', TRUE, FALSE),
+        ('cb480378-0b53-11e8-9549-5fe4892e0a62', '/rest/zones/f9ba9f8b-d4be-48f8-bab6-67c933b9b327', 'ncs.resource.annual.cost', 'NCS Resource Annual Cost', 0, 'Year', '2018-02-03', TRUE, TRUE);
