@@ -31,8 +31,8 @@ where zone_rate.resource_uri = '/rest/zones/f9ba9f8b-d4be-48f8-bab6-67c933b9b327
 order by zone_rate.effective_date asc, rd_effective_date asc, dd_effective_date asc;
 
 
-select zone_rate.resource_uri, zone_rate.meter_id, zone_rate.zone_rate_value, zone_rate.active, zone_rate.use_default_rate, rd_use_default,
-    zone_rate.effective_date, zone_rate.next_date, rd_effective_date, rd_next_date, dd_effective_date, region_default_value, 
+select zone_rate.zone_rate_value, zone_rate.use_default_rate as use_df, rd_use_default as rd_use_df,
+    DATE_FORMAT(zone_rate.effective_date, "%d-%m-%Y") as z_rate_start, DATE_FORMAT(zone_rate.next_date, "%d-%m-%Y") as z_rate_finish, DATE_FORMAT(rd_effective_date, "%d-%m-%Y") as r_rate_start, DATE_FORMAT(rd_next_date, "%d-%m-%Y") as r_rate_finish, DATE_FORMAT(dd_effective_date, "%d-%m-%Y") as df_rate_start, DATE_FORMAT(dd_next_date, "%d-%m-%Y") as df_rate_finish, region_default_value, 
     default_value from (
 select r.resource_uri as resource_uri, r.meter_id as meter_id, r.effective_date as effective_date, (select MIN(r2.effective_date) FROM rates r2
 WHERE r2.active = TRUE AND r2.resource_uri = r.resource_uri AND r2.meter_id = r.meter_id
@@ -40,10 +40,11 @@ AND r2.effective_date > r.effective_date) as next_date, r.rate_value as zone_rat
 from rates r 
 ) as zone_rate   
 left outer join (select resource_uri as rd_resource_uri, meter_id, use_default_rate as rd_use_default, effective_date as rd_effective_date, rate_value as region_default_value, (select MIN(r2.effective_date) FROM rates r2
-WHERE r2.active = TRUE AND r2.resource_uri = r.resource_uri AND r2.meter_id = r.meter_id
-AND r2.effective_date > r.effective_date) as rd_next_date from rates where resource_uri = '/rest/regions/fa491f92-3fbf-4715-befc-bae1f65ec0b7') as rd on zone_rate.meter_id = rd.meter_id and rd_effective_date < zone_rate.next_date and zone_rate.use_default_rate = TRUE
-left outer join (select resource_uri as dd_resource_uri, meter_id, effective_date as dd_effective_date, rate_value as default_value from rates where resource_uri = 'default') as dd on zone_rate.meter_id = dd.meter_id and dd_effective_date < zone_rate.next_date and zone_rate.use_default_rate = TRUE
+WHERE r2.active = TRUE AND r2.resource_uri = rates.resource_uri AND r2.meter_id = rates.meter_id
+AND r2.effective_date > rates.effective_date) as rd_next_date from rates where resource_uri = '/rest/regions/fa491f92-3fbf-4715-befc-bae1f65ec0b7') as rd on zone_rate.meter_id = rd.meter_id and rd_effective_date < zone_rate.next_date and zone_rate.use_default_rate = TRUE
+left outer join (select resource_uri as dd_resource_uri, meter_id, effective_date as dd_effective_date, rate_value as default_value, (select MIN(r2.effective_date) FROM rates r2
+WHERE r2.active = TRUE AND r2.resource_uri = rates.resource_uri AND r2.meter_id = rates.meter_id
+AND r2.effective_date > rates.effective_date) as dd_next_date from rates where resource_uri = 'default') as dd on zone_rate.meter_id = dd.meter_id and dd_effective_date < zone_rate.next_date and zone_rate.use_default_rate = TRUE
 where zone_rate.resource_uri = '/rest/zones/f9ba9f8b-d4be-48f8-bab6-67c933b9b327' and zone_rate.active = TRUE
 order by zone_rate.effective_date asc, rd_effective_date asc, dd_effective_date asc;
-
 
