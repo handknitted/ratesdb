@@ -1,0 +1,34 @@
+dd
+
+dd_resource_uri,meter_id,dd_effective_date,default_value, dd_next_date
+
+default,resource.memory.allocation,2017-02-01 00:00:00,0.006000000,
+default,resource.storage.allocation,2017-02-01 00:00:00,0.000009722,
+default,ncs.resource.annual.cost,2017-02-01 00:00:00,109000.999000000,2017-09-01 00:00:00
+default,ncs.resource.annual.cost,2017-09-01 00:00:00,110000.000100000,
+default,resource.cores.allocation,2017-02-01 00:00:00,0.002000000,
+
+rd
+
+rd_resource_uri,meter_id,rd_use_default,rd_effective_date,region_default_value,rd_next_date
+
+/rest/regions/fa491f92-3fbf-4715-befc-bae1f65ec0b7,ncs.resource.annual.cost,1,2017-07-11 00:00:00,0.000000000,
+/rest/regions/fa491f92-3fbf-4715-befc-bae1f65ec0b7,ncs.resource.annual.cost,0,2017-07-01 00:00:00,110000.222220000,2017-07-11 00:00:00
+
+zd
+
+resource_uri,meter_id,effective_date,next_date,zone_rate_value,active,use_default_rate
+
+default,resource.memory.allocation,2017-02-01 00:00:00,,0.006000000,1,0
+default,resource.storage.allocation,2017-02-01 00:00:00,,0.000009722,1,0
+/rest/regions/fa491f92-3fbf-4715-befc-bae1f65ec0b7,ncs.resource.annual.cost,2017-07-11 00:00:00,,0.000000000,1,1
+default,ncs.resource.annual.cost,2017-02-01 00:00:00,2017-09-01 00:00:00,109000.999000000,1,0
+/rest/zones/f9ba9f8b-d4be-48f8-bab6-67c933b9b327,ncs.resource.annual.cost,2017-06-03 00:00:00,2018-02-03 00:00:00,0.000000000,1,1
+/rest/regions/fa491f92-3fbf-4715-befc-bae1f65ec0b7,ncs.resource.annual.cost,2017-07-01 00:00:00,2017-07-11 00:00:00,110000.222220000,1,0
+/rest/zones/f9ba9f8b-d4be-48f8-bab6-67c933b9b327,ncs.resource.annual.cost,2018-02-03 00:00:00,2018-02-07 00:00:00,104000.400000000,1,0
+/rest/zones/f9ba9f8b-d4be-48f8-bab6-67c933b9b327,ncs.resource.annual.cost,2018-02-07 00:00:00,,108000.800000000,1,0
+default,ncs.resource.annual.cost,2017-09-01 00:00:00,,110000.000100000,1,0
+default,resource.cores.allocation,2017-02-01 00:00:00,,0.002000000,1,0
+
+
+
